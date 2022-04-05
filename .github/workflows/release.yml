@@ -10,8 +10,8 @@ jobs:
       matrix:
         #os: [ubuntu-20.04, ubuntu-18.04, windows-2022, windows-2019, macos-11, macos-10.15]
         os: [ubuntu-20.04]
-        #php: [8.1, 8.0, 7.4, 7.3, 7.2, 7.1, 7.0]
-        php: [8.1, 7.3]
+        php: [8.1, 8.0, 7.4, 7.3, 7.2, 7.1, 7.0]
+        #php: [8.1, 7.3]
 
     steps:
     - name: Checkout
@@ -35,16 +35,35 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php${{ matrix.php }}-
 
-    - name: Downgrade phpunit to a version that supports PHP 7.2
+    - name: PHP 7.2 alterations for composer
+      # Downgrade phpunit to v8, which is the highest version that supports PHP 7.2
       if: matrix.php == '7.2'
-      run: composer require "phpunit/phpunit:^8.0" --dev
+      run: composer require "phpunit/phpunit:^8.0" --dev --no-update
 
-    - name: Downgrade phpunit to a version that supports PHP 7.1
+    - name: PHP 7.1 alterations for composer
+      # 1. Remove phpstan, as it does not work on PHP 7.1
+      # 2: Downgrade phpunit to v7, which is the highest version that supports PHP 7.1
       if: matrix.php == '7.1'
-      run: composer require "phpunit/phpunit:^7.0" --dev
+      run: |
+        composer remove phpstan/phpstan --dev --no-update
+        composer require "phpunit/phpunit:^7.0" --dev --no-update
+        composer update
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+    - name: PHP 7.0 alterations for composer
+      # 1. Remove phpstan, as it does not work on PHP 7.0
+      # 2: Downgrade phpunit to v6, which is the highest version that supports PHP 7.0
+      if: matrix.php == '7.0'
+      run: |
+        composer remove phpstan/phpstan --dev --no-update
+        composer require "phpunit/phpunit:^6.0" --dev --no-update
+        composer update
 
-    - name: Run test suite
-      run: composer run-script test
+    - name: Run phpunit (test cases)
+      run: composer run-script test-no-cov
+
+    - name: Run phpstan on PHP>=7.2 (to check php syntax)
+      if: (matrix.php != '7.0') && (matrix.php != '7.1') && (matrix.php != '7.2')
+      run: composer run-script phpstan
+
+    - name: run phpcs (to check coding style)
+      run: composer run-script phpcs-all
