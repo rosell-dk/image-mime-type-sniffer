@@ -70,7 +70,7 @@ jobs:
     - name: Run phpunit (test cases)
       run: composer run-script test-no-cov
 
-    - name: Run phpstan (to check php syntax)
+    - name: Run phpstan on PHP>=7.2 (to check php syntax)
       if: (matrix.php != '7.0') && (matrix.php != '7.1') (matrix.php != '7.2')
       run: composer run-script phpstan
 
