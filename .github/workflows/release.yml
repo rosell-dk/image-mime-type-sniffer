@@ -3,14 +3,14 @@ name: Large testsuite (run manually before releases)
 on: workflow_dispatch
 
 jobs:
-  php81:
+  php:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
         #os: [ubuntu-20.04, ubuntu-18.04, windows-2022, windows-2019, macos-11, macos-10.15]
-        os: [windows-2022]
-        php: [8.1]
+        os: [ubuntu-20.04]
+        php: [8.1, 7.4]
 
     steps:
     - name: Checkout
@@ -30,46 +30,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ runner.os }}-php81-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-php${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-php81-
-
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
-
-    - name: Run test suite
-      run: composer run-script test
-
-  php74:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: true
-      matrix:
-        #os: [ubuntu-20.04, ubuntu-18.04, windows-2022, windows-2019, macos-11, macos-10.15]
-        os: [macos-11]
-        php: [7.4]
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php }}
-        #extensions: exif, mbstring, fileinfo
-
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php74-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php74-
+          ${{ runner.os }}-php${{ matrix.php }}-
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
