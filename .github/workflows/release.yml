@@ -17,16 +17,10 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@v3
       with:
         php-version: ${{ matrix.php }}
-        extensions: exif, mbstring, fileinfo, gd, vips, imagick, gmagick
-
-    - name: Setup problem matchers for PHP
-      run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-
-    - name: Setup problem matchers for PHPUnit
-      run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+        #extensions: exif, mbstring, fileinfo
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -39,6 +33,43 @@ jobs:
         key: ${{ runner.os }}-php81-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php81-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run test suite
+      run: composer run-script test
+
+  php74:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        #os: [ubuntu-20.04, ubuntu-18.04, windows-2022, windows-2019, macos-11, macos-10.15]
+        os: [macos-11]
+        php: [7.4]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v3
+      with:
+        php-version: ${{ matrix.php }}
+        #extensions: exif, mbstring, fileinfo
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php74-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php74-
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
