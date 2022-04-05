@@ -32,11 +32,12 @@ class ImageMimeTypeSnifferTest extends TestCase
     {
         $this->assertEquals('image/jpeg', $this->mimeSniff('jpg-test.jpg'));
 
+        $this->assertEquals('image/jpeg', $this->mimeSniff('.jpg-beginning-with-dot.jpg'));
+
         // The test below fails on Windows, so uncommented. This is not our responsibility
         //$this->assertEquals('image/jpeg', $this->mimeSniff('jpg-ending-with-dot.jpg.'));
 
         $this->assertEquals('image/jpeg', $this->mimeSniff('jpg-with space.jpg'));
-        $this->assertEquals('image/jpeg', $this->mimeSniff('.jpg-beginning-with-dot.jpg'));
     }
 
     public function testJpeg2000()
