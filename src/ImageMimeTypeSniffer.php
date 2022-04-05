@@ -16,7 +16,7 @@ class ImageMimeTypeSniffer
      * @return string|null  mimetype (if it is an image, and type could be determined),
      *    or null (if the file does not match any of the signatures tested)
      */
-    public function detect($filePath)
+    public static function detect($filePath)
     {
         $handle = @fopen($filePath, 'r');
         if ($handle === false) {
