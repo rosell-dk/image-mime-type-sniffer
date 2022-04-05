@@ -1,6 +1,6 @@
 {
   "name": "rosell-dk/image-mime-type-sniffer",
-  "description": "Sniff mime type of images",
+  "description": "Sniff mime type (images only)",
   "type": "library",
   "license": "MIT",
   "keywords": ["mime", "mime type", "image", "images"],
