@@ -17,7 +17,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.2]
+        php: [7.0]
 
 
     steps:
@@ -48,6 +48,10 @@ jobs:
     - name: Downgrade phpunit to a version that supports PHP 7.1
       if: matrix.php == '7.1'
       run: composer require "phpunit/phpunit:^7.0" --dev
+
+    - name: Downgrade phpunit to a version that supports PHP 7.0
+      if: matrix.php == '7.0'
+      run: composer require "phpunit/phpunit:^6.0" --dev
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
