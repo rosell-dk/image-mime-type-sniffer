@@ -17,7 +17,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.0]
+        php: [8.0, 7.1]
 
 
     steps:
@@ -37,9 +37,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: vendor
-        key: ${{ runner.os }}-php${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-php-${{ matrix.php }}
         restore-keys: |
-          ${{ runner.os }}-php${{ matrix.php }}-
+          ${{ runner.os }}-php-
 
     - name: PHP 7.2 alterations for composer
       # Downgrade phpunit to v8, which is the highest version that supports PHP 7.2
@@ -53,7 +53,6 @@ jobs:
       run: |
         composer remove phpstan/phpstan --dev --no-update
         composer require "phpunit/phpunit:^7.0" --dev --no-update
-        composer update
 
     - name: PHP 7.0 alterations for composer
       # 1. Remove phpstan, as it does not work on PHP 7.0
@@ -62,10 +61,12 @@ jobs:
       run: |
         composer remove phpstan/phpstan --dev --no-update
         composer require "phpunit/phpunit:^6.0" --dev --no-update
-        composer update
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+    - name: Composer update
+      run: composer update
+
+    #- name: Install dependencies
+      #run: composer install --prefer-dist --no-progress
 
     - name: Run phpunit (test cases)
       run: composer run-script test-no-cov
