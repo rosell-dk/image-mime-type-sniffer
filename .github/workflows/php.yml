@@ -29,7 +29,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
 
-    - name: Validate composer.json and composer.lock
+    - name: Validate composer.json
       run: composer validate --strict
 
     - name: PHP 7.2 alterations for composer
@@ -43,7 +43,7 @@ jobs:
       if: matrix.php == '7.1'
       run: |
         composer remove phpstan/phpstan --dev --no-update
-        composer require "phpunit/phpunit:^7.0" --dev --no-update
+        composer require "phpunit/phpunit:^6.0" --dev --no-update
 
     - name: PHP 7.0 alterations for composer
       # 1. Remove phpstan, as it does not work on PHP 7.0
@@ -52,9 +52,9 @@ jobs:
       run: |
         composer remove phpstan/phpstan --dev --no-update
         composer require "phpunit/phpunit:^6.0" --dev --no-update
-        
+
     # Create composer.lock, which is going to be used in the cache key
-    - name: Create composer.lock (this is a library, so composer.lock is not committed)
+    - name: Create composer.lock (this is a library, so composer.lock is not part of repo)
       run: composer update --no-install
 
     - name: Cache Composer packages
