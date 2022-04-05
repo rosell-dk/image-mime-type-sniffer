@@ -34,8 +34,10 @@ class ImageMimeTypeSnifferTest extends TestCase
 
         $this->assertEquals('image/jpeg', $this->mimeSniff('.jpg-beginning-with-dot.jpg'));
 
-        // The test below fails on Windows, so uncommented. This is not our responsibility
-        //$this->assertEquals('image/jpeg', $this->mimeSniff('jpg-ending-with-dot.jpg...'));
+        // Adding a file to the repo which ends with a dot makes checkout fail on Windows.
+        // See here: https://github.com/rosell-dk/image-mime-type-sniffer/runs/5832821464?check_suite_focus=true
+        // So, we cannot run this test:
+        // $this->assertEquals('image/jpeg', $this->mimeSniff('jpg-ending-with-dot.jpg.'));
 
         $this->assertEquals('image/jpeg', $this->mimeSniff('jpg-with space.jpg'));
     }
