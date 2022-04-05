@@ -19,7 +19,7 @@
     "test-no-cov": "phpunit tests",
     "test2": "phpunit tests",
     "phpcs": "phpcs --standard=PSR2",
-    "phpcs-all": "phpcs --standard=PSR2 src",
+    "phpcs-all": "phpcs --standard=phpcs-ruleset.xml src",
     "phpcbf": "phpcbf --standard=PSR2",
     "phpstan": "vendor/bin/phpstan analyse src --level=4"
   },
