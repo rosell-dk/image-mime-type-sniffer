@@ -32,6 +32,10 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
+    - name: Remove phpstan on PHP <= 7.1
+      if: matrix.php == '7.1'
+      run: composer remove phpstan/phpstan --dev
+
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -60,6 +64,7 @@ jobs:
       run: composer run-script test-no-cov
 
     - name: Run phpstan (to check php syntax)
+      if: matrix.php != '7.1'
       run: composer run-script phpcs-all
 
     - name: run phpcs (to check coding style)
