@@ -17,7 +17,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.0]
+        php: [7.2]
 
 
     steps:
@@ -56,5 +56,11 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: Run test suite
-      run: composer run-script test
+    - name: Run phpunit (test cases)
+      run: composer run-script test-no-cov
+
+    - name: Run phpstan (to check php syntax)
+      run: composer run-script phpcs-all
+
+    - name: run phpcs (to check coding style)
+      run: composer run-script phpcs-all
