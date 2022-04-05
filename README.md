@@ -1,9 +1,11 @@
 # Image Mime Type Sniffer
 
-Gets mime type of common **image** files by sniffing the file signature.
-The fact that this library limits its ambition to sniff images makes it quite lite and simple
+Gets mime type of common **image** files by sniffing the file content, looking for signatures.
+
+The fact that this library limits its ambition to sniff images makes it light and simple. It is also quite fast. Most other sniffers iterates through all common signatures, however this library uses a mix of finite-state machine approach and iteration to achieve a good balance of speed, compactness, simplicity and readability.
 
 The library recognizes common image formats, such as GIF, JPEG, WEBP, JPEG-2000 and HEIF
+
 Here is the full list:
 
 - application/psd
