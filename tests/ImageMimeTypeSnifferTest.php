@@ -14,10 +14,26 @@ class ImageMimeTypeSnifferTest extends TestCase
     }
 
 
+    public function testBMP()
+    {
+        $this->assertEquals('image/bmp', $this->mimeSniff('bmp-test.bmp'));
+    }
+
     public function testGIF()
     {
         $this->assertEquals('image/gif', $this->mimeSniff('gif-test.gif'));
     }
+
+    public function testHeic()
+    {
+        $this->assertEquals('image/heic', $this->mimeSniff('heic-test.heic'));
+    }
+
+    /*public function testHeif()
+    {
+        $this->assertEquals('image/heif', $this->mimeSniff('heif-test.heif'));
+        //$this->assertEquals('image/heif', $this->mimeSniff('sample1.heif'));
+    }*/
 
     public function testPNG()
     {
@@ -73,6 +89,19 @@ class ImageMimeTypeSnifferTest extends TestCase
     {
         $this->assertNull($this->mimeSniff('not-images/odt-test.odt'));
     }
+
+    /* --------- below here: exceptions ------------- */
+    public function testFileNotFound()
+    {
+        $this->expectException(\Exception::class);
+        $this->assertNull($this->mimeSniff(''));
+    }
+    public function testInvalidFile()
+    {
+        $this->expectException(\Exception::class);
+        $this->assertNull($this->mimeSniff('php://input'));
+    }
+
 
     /*
     public function testICO()
