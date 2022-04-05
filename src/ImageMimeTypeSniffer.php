@@ -15,24 +15,34 @@ class ImageMimeTypeSniffer
      * @param  string  $filePath  The path to the file
      * @return string|null  mimetype (if it is an image, and type could be determined),
      *    or null (if the file does not match any of the signatures tested)
+     * @throws Exception  if file cannot be opened/read
      */
     public static function detect($filePath)
     {
         $handle = @fopen($filePath, 'r');
         if ($handle === false) {
-            return null;
+            throw new \Exception('File could not be opened');
         }
         // 20 bytes is sufficient for all our sniffers, except image/svg+xml.
         // The svg sniffer takes care of reading more
         $sampleBin = @fread($handle, 20);
         if ($sampleBin === false) {
-            return null;
+            throw new \Exception('File could not be read');
         }
         $firstByte = $sampleBin[0];
         $sampleHex = strtoupper(bin2hex($sampleBin));
 
         $hexPatterns = [];
         $binPatterns = [];
+
+        //$hexPatterns[] = ['image/heic', "/667479706865(6963|6978|7663|696D|6973|766D|7673)/"];
+        //$hexPatterns[] = ['image/heif', "/667479706D(69|73)6631)/"];
+        // heic:
+
+        // HEIC signature: https://github.com/strukturag/libheif/issues/83#issuecomment-421427091
+        // https://nokiatech.github.io/heif/technical.html
+        $binPatterns[] = ['image/heic', "/^(.{4}|.{8})ftyphe(ic|ix|vc|im|is|vm|vs)/"];
+        //$binPatterns[] = ['image/heif', "/^(.{4}|.{8})ftypm(i|s)f1/"];
 
         // https://www.rapidtables.com/convert/number/hex-to-ascii.html
         switch ($firstByte) {
@@ -93,13 +103,6 @@ class ImageMimeTypeSniffer
                     $sampleBin .= $moreBytes;
                 }
                 $binPatterns[] = ['image/svg+xml', "/^(<\?xml[^>]*\?>.*)?<svg/is"];
-                break;
-
-            case "f":
-                //$hexPatterns[] = ['image/heic', "/667479706865(6963|6978|7663|696D|6973|766D|7673)/"];
-                //$hexPatterns[] = ['image/heif', "/667479706D(69|73)6631)/"];
-                $binPatterns[] = ['image/heic', "/ftyphe(ic|ix|vc|im|is|vm|vs)/"];
-                $binPatterns[] = ['image/heif', "/ftypm(i|s)f1/"];
                 break;
 
             case "\x89":
