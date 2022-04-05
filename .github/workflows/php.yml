@@ -32,10 +32,6 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
-    - name: Remove phpstan on PHP <= 7.1
-      if: matrix.php == '7.1'
-      run: composer remove phpstan/phpstan --dev
-
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -45,13 +41,22 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php${{ matrix.php }}-
 
-    - name: Downgrade phpunit to a version that supports PHP 7.2
-      if: matrix.php == '7.2'
-      run: composer require "phpunit/phpunit:^8.0" --dev
+    - name: Remove phpstan on PHP <= 7.1
+      if: matrix.php == '7.1'
+      run: composer remove phpstan/phpstan --dev --no-update
 
     - name: Downgrade phpunit to a version that supports PHP 7.1
       if: matrix.php == '7.1'
-      run: composer require "phpunit/phpunit:^7.0" --dev
+      run: composer require "phpunit/phpunit:^7.0" --dev --no-update
+
+    - name: Downgrade phpunit to a version that supports PHP 7.1
+      if: matrix.php == '7.1'
+      run: composer update
+
+    - name: Downgrade phpunit to a version that supports PHP 7.2
+      if: matrix.php == '7.2'
+      run: composer require "phpunit/phpunit:^8.0" --dev --no-update
+
 
     - name: Downgrade phpunit to a version that supports PHP 7.0
       if: matrix.php == '7.0'
