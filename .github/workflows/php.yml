@@ -52,7 +52,7 @@ jobs:
         composer remove phpstan/phpstan --dev --no-update
         composer require "phpunit/phpunit:^6.0" --dev --no-update
 
-    # Create composer.lock, which is going to be used in the cache key
+    # Create composer.lock, which is going to be used in the cache key, and for install
     - name: Create composer.lock for cache key (this is a library, so composer.lock is not part of repo)
       run: composer update --no-install
 
