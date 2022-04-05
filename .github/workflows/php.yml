@@ -39,6 +39,7 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
+          ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
           ${{ runner.os }}-php-${{ matrix.php }}
           ${{ runner.os }}-php-
 
