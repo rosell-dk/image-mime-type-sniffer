@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Setup PHP
-      uses: shivammathur/setup-php@v3
+      uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
         #extensions: exif, mbstring, fileinfo
@@ -54,7 +54,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Setup PHP
-      uses: shivammathur/setup-php@v3
+      uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
         #extensions: exif, mbstring, fileinfo
