@@ -26,6 +26,21 @@ Here is the full list:
 
 TODO: AVIF, image/heif
 
+# Usage
+
+```php
+use \ImageMimeTypeSniffer\ImageMimeTypeSniffer;
+
+$mimeType = ImageMimeTypeSniffer::detect($fileName);  
+if (is_null($mimeType)) {
+  // mimetype was not detected, which means the file is probably not an image (unless it is a rare type)
+} else {
+  // It is an image, and we know the mimeType
+}
+```
+
+PS: An `\Exception` is thrown if the file is unreadable.
+
 # Alternatives
 
 There are quite a few PHP mime type detectors out there:
