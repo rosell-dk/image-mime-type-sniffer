@@ -54,7 +54,7 @@ jobs:
       if: matrix.php == '7.1'
       run: |
         composer remove phpstan/phpstan --dev --no-update
-        composer require "phpunit/phpunit:^7.0" --dev --no-update
+        composer require "phpunit/phpunit:^6.0" --dev --no-update
 
     - name: PHP 7.0 alterations for composer
       # 1. Remove phpstan, as it does not work on PHP 7.0
