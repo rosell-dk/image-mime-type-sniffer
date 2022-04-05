@@ -43,10 +43,10 @@ jobs:
 
     - name: Remove phpstan on PHP <= 7.1
       if: matrix.php == '7.1'
-      run:
-      - composer remove phpstan/phpstan --dev --no-update
-      - composer require "phpunit/phpunit:^7.0" --dev --no-update
-      - composer update
+      steps:
+      - run: composer remove phpstan/phpstan --dev --no-update
+      - run: composer require "phpunit/phpunit:^7.0" --dev --no-update
+      - run: composer update
 
     - name: Downgrade phpunit to a version that supports PHP 7.2
       if: matrix.php == '7.2'
