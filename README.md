@@ -12,7 +12,6 @@ Here is the full list:
 - image/bmp
 - image/gif
 - image/heic
-- image/heif
 - image/jp2
 - image/jp20
 - image/jpeg
@@ -25,7 +24,7 @@ Here is the full list:
 - image/x-icon
 - video/mj2
 
-TODO: AVIF
+TODO: AVIF, image/heif
 
 # Alternatives
 
