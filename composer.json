@@ -18,7 +18,7 @@
     "test": "phpunit --coverage-text --coverage-clover=build/logs/coverage.clover tests",
     "test-no-cov": "phpunit tests",
     "test2": "phpunit tests",
-    "phpcs": "phpcs --standard=PSR2",
+    "phpcs": "phpcs --standard=phpcs-ruleset.xml",
     "phpcs-all": "phpcs --standard=phpcs-ruleset.xml src",
     "phpcbf": "phpcbf --standard=PSR2",
     "phpstan": "vendor/bin/phpstan analyse src --level=4"
