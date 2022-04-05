@@ -63,7 +63,7 @@ class ImageMimeTypeSniffer
                 break;
 
             case "8":
-              $binPatterns[] = ['application/psd', "/^8BPS/"];
+                $binPatterns[] = ['application/psd', "/^8BPS/"];
                 break;
 
             case "B":
