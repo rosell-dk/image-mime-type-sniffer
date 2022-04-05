@@ -13,6 +13,7 @@ class ImageMimeTypeSnifferTest extends TestCase
         return ImageMimeTypeSniffer::detect(__DIR__ . '/images/' . $fileName);
     }
 
+
     public function testGIF()
     {
         $this->assertEquals('image/gif', $this->mimeSniff('gif-test.gif'));
@@ -40,6 +41,12 @@ class ImageMimeTypeSnifferTest extends TestCase
         $this->assertEquals('image/jp2', $this->mimeSniff('jpeg-2000-jp2-test.jp2'));
         // TODO: test jpx, etc
     }
+
+    public function testSVG()
+    {
+        $this->assertEquals('image/svg+xml', $this->mimeSniff('svg-test.svg'));
+    }
+
 
     public function testTiff()
     {
