@@ -15,7 +15,7 @@ class ImageMimeTypeSniffer
      * @param  string  $filePath  The path to the file
      * @return string|null  mimetype (if it is an image, and type could be determined),
      *    or null (if the file does not match any of the signatures tested)
-     * @throws Exception  if file cannot be opened/read
+     * @throws \Exception  if file cannot be opened/read
      */
     public static function detect($filePath)
     {
@@ -41,6 +41,8 @@ class ImageMimeTypeSniffer
 
         // HEIC signature: https://github.com/strukturag/libheif/issues/83#issuecomment-421427091
         // https://nokiatech.github.io/heif/technical.html
+        // https://perkeep.org/internal/magic/magic.go
+        // https://www.file-recovery.com/mp4-signature-format.htm
         $binPatterns[] = ['image/heic', "/^(.{4}|.{8})ftyphe(ic|ix|vc|im|is|vm|vs)/"];
         //$binPatterns[] = ['image/heif', "/^(.{4}|.{8})ftypm(i|s)f1/"];
 
