@@ -29,17 +29,25 @@ jobs:
     #  with:
     #    ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    - name: Install SSH Key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+
     - name: Deploy
       run: |
         ssh-agent
-        echo "$DEPLOY_PRIVATE_KEY" | agent-add
         sh -c "rsync -avh $GITHUB_WORKSPACE/src/ $DEPLOY_DESTINATION"
       env:
-        DEPLOY_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
 
 
 #                sh -c "ls $GITHUB_WORKSPACE"
+        # echo "$DEPLOY_PRIVATE_KEY" | agent-add
+#      env:
+#        DEPLOY_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#        DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
 
 
 
