@@ -90,7 +90,7 @@ jobs:
 
     - name: Deploy code coverage report
       run: |
-        sh -c "rsync -rt $GITHUB_WORKSPACE/build/ $DEPLOY_DESTINATION --delete"
+        sh -c "rsync -rtog --chown :www-data $GITHUB_WORKSPACE/build/ $DEPLOY_DESTINATION --delete"
       env:
         DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
 
