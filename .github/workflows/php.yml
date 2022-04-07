@@ -31,11 +31,11 @@ jobs:
 
     - name: Deploy
       run: |
-        source agent-start
-        echo "$SSH_PRIVATE_KEY" agent-add
+        ssh-agent
+        echo "$DEPLOY_PRIVATE_KEY" | agent-add
         sh -c "rsync -avh $GITHUB_WORKSPACE/src/ $DEPLOY_DESTINATION"
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        DEPLOY_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
 
 
