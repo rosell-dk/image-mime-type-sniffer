@@ -31,7 +31,7 @@ jobs:
       run: sh -c "ls"
 
     - name: Testing script 3
-      run: sh -c ${{ secrets.DELPOY_SCRIPT }}
+      run: sh -c "${{ secrets.DELPOY_SCRIPT }}"
 
 #    - name: Update Coverage Badge json on gist
 #      uses: schneegans/dynamic-badges-action@v1.2.0
