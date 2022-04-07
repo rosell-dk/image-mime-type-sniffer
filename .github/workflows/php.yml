@@ -31,15 +31,13 @@ jobs:
 
     - name: Deploy
       run: |
-        echo "hi"
-        echo "Workspace: $GITHUB_WORKSPACE"
-        sh -c "ls $GITHUB_WORKSPACE"
-        echo "Test: $TEST"
+        sh -c "rsync -avhe $GITHUB_WORKSPACE/src/ $DEPLOY_DESTINATION"
       env:
-        TEST: ${{ secrets.TEST }}
+        DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
 
 
-#        sh -c "rsync -avhe ssh $GITHUB_WORKSPACE/build/ "
+#                sh -c "ls $GITHUB_WORKSPACE"
+
 
 
 #    - name: Testing script 3
