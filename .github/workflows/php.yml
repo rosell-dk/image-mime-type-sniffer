@@ -20,12 +20,7 @@ jobs:
         php: [8.1]
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
 
-
-    - name: Testing script
-      run: echo 'hello'
 
     - name: Testing script 2
       run: sh -c "ls"
