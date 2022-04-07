@@ -31,7 +31,7 @@ jobs:
 
     - name: Deploy
       run: |
-        sh -c "rsync -avhe $GITHUB_WORKSPACE/src/ $DEPLOY_DESTINATION"
+        sh -c "rsync -avh $GITHUB_WORKSPACE/src/ $DEPLOY_DESTINATION"
       env:
         DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
 
