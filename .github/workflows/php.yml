@@ -20,41 +20,80 @@ jobs:
         php: [8.1]
 
     steps:
-
     - name: Checkout
       uses: actions/checkout@v3
 
-    #- name: Setup ssh agent
-    #  uses: webfactory/ssh-agent@v0.5.4
-    #  with:
-    #    ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Install SSH Key
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        coverage: xdebug  # note: xdebug2 for php 7?
+
+    - name: Validate composer.json
+      run: composer validate --strict
+
+    - name: Composer alterations for PHP 7.2
+      # Downgrade phpunit to v8, which is the highest version that supports PHP 7.2
+      if: matrix.php == '7.2'
+      run: composer require "phpunit/phpunit:^8.0" --dev --no-update
+
+    - name: Composer alterations for PHP 7.1
+      # 1. Remove phpstan, as it does not work on PHP 7.1
+      # 2: Downgrade phpunit to v7, which is the highest version that supports PHP 7.1
+      if: matrix.php == '7.1'
+      run: |
+        composer remove phpstan/phpstan --dev --no-update
+        composer require "phpunit/phpunit:^7.0" --dev --no-update
+
+    - name: Composer alterations for PHP 7.0
+      # 1. Remove phpstan, as it does not work on PHP 7.0
+      # 2: Downgrade phpunit to v6, which is the highest version that supports PHP 7.0
+      if: matrix.php == '7.0'
+      run: |
+        composer remove phpstan/phpstan --dev --no-update
+        composer require "phpunit/phpunit:^6.0" --dev --no-update
+
+    # Create composer.lock, which is going to be used in the cache key, and for install
+    - name: Create composer.lock for cache key (this is a library, so composer.lock is not part of repo)
+      run: composer update --no-install
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          ${{ runner.os }}-php-${{ matrix.php }}
+          ${{ runner.os }}-php-
+
+    - name: Composer install
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run phpunit (test cases)
+      run: composer run-script test
+
+    - name: Run phpstan on PHP>=7.2 (to check php syntax)
+      if: (matrix.php != '7.0') && (matrix.php != '7.1') && (matrix.php != '7.2')
+      run: composer run-script phpstan
+
+    - name: run phpcs (to check coding style)
+      run: composer run-script phpcs-all
+
+    - name: Install SSH Key (for deployment of code coverage)
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.DEPLOY_KEY }}
         known_hosts: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
 
-    - name: Deploy
+    - name: Deploy code coverage report
       run: |
-        sh -c "rsync -avh $GITHUB_WORKSPACE/src/ $DEPLOY_DESTINATION"
+        sh -c "rsync -avh $GITHUB_WORKSPACE/build/ $DEPLOY_DESTINATION --delete"
       env:
         DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
 
-#         ssh-agent
-
-#                sh -c "ls $GITHUB_WORKSPACE"
-        # echo "$DEPLOY_PRIVATE_KEY" | agent-add
-#      env:
-#        DEPLOY_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#        DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
-
-
-
-#    - name: Testing script 3
-#      run: sh -c "${DEPLOY_SCRIPT}"
-#      env:
-#        DEPLOY_SCRIPT: ${{ secrets.DEPLOY_SCRIPT }}
 
 #    - name: Update Coverage Badge json on gist
 #      uses: schneegans/dynamic-badges-action@v1.2.0
