@@ -84,8 +84,8 @@ jobs:
 
     - name: Create coverage badge json
       run: |
-      COVERAGE=$(grep -oP -m 1 'Lines:\s*\K[0-9.%]+' composer-output.txt)
-      echo {"schemaVersion":1,"label":"Coverage","message":"$COVERAGE","color":"orange"} | tee build/coverage-badge.json
+        COVERAGE=$(grep -oP -m 1 'Lines:\s*\K[0-9.%]+' composer-output.txt)
+        echo {"schemaVersion":1,"label":"Coverage","message":"$COVERAGE","color":"orange"} | tee build/coverage-badge.json
 
       #echo "Coverage is $COVERAGE"
       #echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
