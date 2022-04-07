@@ -33,8 +33,9 @@ jobs:
       run: |
         echo "hi"
         echo "Workspace: $GITHUB_WORKSPACE"
+        sh -c "ls $GITHUB_WORKSPACE"
         echo "Test: $TEST"
-      with:
+      env:
         TEST: ${{ secrets.TEST }}
 
 
