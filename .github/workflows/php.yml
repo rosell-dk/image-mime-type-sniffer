@@ -73,7 +73,7 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run phpunit (test cases)
-      run: composer run-script test
+      run: composer run-script test | tee build/composer-output.txt
 
     - name: Run phpstan on PHP>=7.2 (to check php syntax)
       if: (matrix.php != '7.0') && (matrix.php != '7.1') && (matrix.php != '7.2')
@@ -81,6 +81,14 @@ jobs:
 
     - name: run phpcs (to check coding style)
       run: composer run-script phpcs-all
+
+    - name: Create coverage badge json
+      run: |
+      COVERAGE=$(grep -oP -m 1 'Lines:\s*\K[0-9.%]+' composer-output.txt)
+      echo {"schemaVersion":1,"label":"Coverage","message":"$COVERAGE","color":"orange"} | tee build/coverage-badge.json
+
+      #echo "Coverage is $COVERAGE"
+      #echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
     - name: Install SSH Key (for deployment of code coverage)
       uses: shimataro/ssh-key-action@v2
