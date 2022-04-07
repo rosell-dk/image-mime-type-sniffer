@@ -33,6 +33,12 @@ jobs:
       run: |
         echo "hi"
         echo "Workspace: $GITHUB_WORKSPACE"
+        echo "Test: $TEST"
+      with:
+        TEST: ${{ secrets.TEST }}
+
+
+#        sh -c "rsync -avhe ssh $GITHUB_WORKSPACE/build/ "
 
 
 #    - name: Testing script 3
