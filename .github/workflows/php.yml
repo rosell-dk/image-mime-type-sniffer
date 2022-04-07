@@ -24,15 +24,18 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Setup ssh agent
-      uses: webfactory/ssh-agent@v0.5.4
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #- name: Setup ssh agent
+    #  uses: webfactory/ssh-agent@v0.5.4
+    #  with:
+    #    ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy
       run: |
+        source agent-start
+        echo "$SSH_PRIVATE_KEY" agent-add
         sh -c "rsync -avh $GITHUB_WORKSPACE/src/ $DEPLOY_DESTINATION"
       env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         DEPLOY_DESTINATION: ${{ secrets.DEPLOY_DESTINATION }}
 
 
