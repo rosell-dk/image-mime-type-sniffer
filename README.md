@@ -1,5 +1,6 @@
 # Image Mime Type Sniffer
-
+[![Build Status](https://github.com/rosell-dk/image-mime-type-sniffer/actions/workflows/php.yml/badge.svg)](https://github.com/rosell-dk/image-mime-type-sniffer/actions/workflows/php.yml)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/rosell-dk/image-mime-type-sniffer/blob/master/LICENSE)
 [![Coverage](https://img.shields.io/endpoint?url=https://little-b.it/image-mime-type-sniffer/code-coverage/coverage-badge.json)](http://little-b.it/image-mime-type-sniffer/code-coverage/coverage/index.html)
 
 
