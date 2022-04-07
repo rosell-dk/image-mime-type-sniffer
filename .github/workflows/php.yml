@@ -21,14 +21,23 @@ jobs:
 
     steps:
 
+    - name: Checkout
+      uses: actions/checkout@v3
 
-    - name: Testing script 2
-      run: sh -c "ls"
+    - name: Setup ssh agent
+      uses: webfactory/ssh-agent@v0.5.4
+              with:
+                  ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Testing script 3
-      run: sh -c "${DEPLOY_SCRIPT}"
-      env:
-        DEPLOY_SCRIPT: ${{ secrets.DEPLOY_SCRIPT }}
+    - name: Deploy
+      run: |
+        echo "hi"
+        echo "Workspace: $GITHUB_WORKSPACE"
+
+#    - name: Testing script 3
+#      run: sh -c "${DEPLOY_SCRIPT}"
+#      env:
+#        DEPLOY_SCRIPT: ${{ secrets.DEPLOY_SCRIPT }}
 
 #    - name: Update Coverage Badge json on gist
 #      uses: schneegans/dynamic-badges-action@v1.2.0
