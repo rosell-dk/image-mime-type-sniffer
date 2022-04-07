@@ -23,70 +23,25 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+    - name: Update Coverage Badge json on gist
+      uses: schneegans/dynamic-badges-action@v1.2.0
       with:
-        php-version: ${{ matrix.php }}
-        coverage: xdebug  # note: xdebug2 for php 7?
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: 91b667a55d12e70f688f7786fa693069
+        filename: coverage-badge-image-mime-type-sniffer.json
+        label: Hellllo
+        message: From GA
+        color: orange
 
-    - name: Validate composer.json
-      run: composer validate --strict
 
-    - name: Composer alterations for PHP 7.2
-      # Downgrade phpunit to v8, which is the highest version that supports PHP 7.2
-      if: matrix.php == '7.2'
-      run: composer require "phpunit/phpunit:^8.0" --dev --no-update
-
-    - name: Composer alterations for PHP 7.1
-      # 1. Remove phpstan, as it does not work on PHP 7.1
-      # 2: Downgrade phpunit to v7, which is the highest version that supports PHP 7.1
-      if: matrix.php == '7.1'
-      run: |
-        composer remove phpstan/phpstan --dev --no-update
-        composer require "phpunit/phpunit:^7.0" --dev --no-update
-
-    - name: Composer alterations for PHP 7.0
-      # 1. Remove phpstan, as it does not work on PHP 7.0
-      # 2: Downgrade phpunit to v6, which is the highest version that supports PHP 7.0
-      if: matrix.php == '7.0'
-      run: |
-        composer remove phpstan/phpstan --dev --no-update
-        composer require "phpunit/phpunit:^6.0" --dev --no-update
-
-    # Create composer.lock, which is going to be used in the cache key, and for install
-    - name: Create composer.lock for cache key (this is a library, so composer.lock is not part of repo)
-      run: composer update --no-install
-
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
-          ${{ runner.os }}-php-${{ matrix.php }}
-          ${{ runner.os }}-php-
-
-    - name: Composer install
-      run: composer install --prefer-dist --no-progress
-
-    - name: Run phpunit (test cases)
-      run: composer run-script test
-
-    - name: Run phpstan on PHP>=7.2 (to check php syntax)
-      if: (matrix.php != '7.0') && (matrix.php != '7.1') && (matrix.php != '7.2')
-      run: composer run-script phpstan
-
-    - name: run phpcs (to check coding style)
-      run: composer run-script phpcs-all
-
-    - name: Generate test coverage badge
-      uses: timkrase/phpunit-coverage-badge@v1.2.0
-      with:
-        report: build/coverage.clover
-        report_type: clover
-        coverage_badge_path: 'badge-coverage.svg'
-        push_badge: true
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        commit_message: Update code coverage badge [ci]
+    #- name: Generate test coverage badge
+    #  uses: timkrase/phpunit-coverage-badge@v1.2.0
+    #  with:
+    #    report: build/coverage.clover
+    #    report_type: clover
+    #    coverage_badge_path: 'badge-coverage.svg'
+    #    push_badge: true
+    #    repo_token: ${{ secrets.GITHUB_TOKEN }}
+    #    commit_message: Update code coverage badge [ci]
+    #    commit_email: it@rosell.dk
+    #    commit_name: Bjørn Rosell
