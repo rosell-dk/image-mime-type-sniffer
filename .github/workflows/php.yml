@@ -17,7 +17,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1]
+        php: [8.1]
 
     steps:
     - name: Checkout
@@ -30,6 +30,8 @@ jobs:
 
         # Store XDEBUG in github env, so we can access it later through env.XDEBUG
         echo "XDEBUG=$XDEBUG" >> $GITHUB_ENV
+
+        echo "Result: ${{ env.XDEBUG }}"
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -94,8 +96,6 @@ jobs:
 
     - name: Create coverage badge json
       run: |
-        echo "btw: xdebug is: ${{ env.XDEBUG }}"
-
         # Extract total coverage
         COVERAGE=$(grep -oP -m 1 'Lines:\s*\K[0-9.%]+' build/coverage.txt)
 
