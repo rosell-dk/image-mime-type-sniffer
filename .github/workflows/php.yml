@@ -17,7 +17,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [7.1, 7.0, 7.3, 7.4, 8.1]
+        php: [7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1]
 
     steps:
     - name: Checkout
@@ -29,7 +29,7 @@ jobs:
         if grep -oP '^7.[234]' <<< "$PHP" > /dev/null; then XDEBUG=xdebug2; else XDEBUG=xdebug; fi
 
         # Store XDEBUG in github env, so we can access it later through env.XDEBUG
-        echo "XDEBUG=xdebug2" >> $GITHUB_ENV
+        echo "XDEBUG=$XDEBUG" >> $GITHUB_ENV
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
