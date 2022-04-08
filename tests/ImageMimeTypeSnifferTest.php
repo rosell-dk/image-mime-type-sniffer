@@ -4,6 +4,7 @@ namespace Tests\ImageMimeTypeSniffer;
 
 use \ImageMimeTypeSniffer\ImageMimeTypeSniffer;
 use \PHPUnit\Framework\TestCase;
+use org\bovigo\vfs\vfsStream;
 
 class ImageMimeTypeSnifferTest extends TestCase
 {
@@ -151,7 +152,19 @@ class ImageMimeTypeSnifferTest extends TestCase
         ImageMimeTypeSniffer::detect('php://input');
     }
 
-    // TODO: We can test open failure with vfsStream
+    public function testFileNoReadPermission()
+    {
+        $root = vfsStream::setup();
+        $file = vfsStream::newFile('hello.txt')
+            ->withContent('hello')
+            ->at($root)
+            ->chmod(0000);
+
+        // fopen should now fail...
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect($file->url());
+    }
+
     // https://github.com/bovigo/vfsStream/pull/212
 
     /*
