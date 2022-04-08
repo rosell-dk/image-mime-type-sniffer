@@ -5,6 +5,8 @@
 [![Build Status](https://github.com/rosell-dk/image-mime-type-sniffer/actions/workflows/php.yml/badge.svg)](https://github.com/rosell-dk/image-mime-type-sniffer/actions/workflows/php.yml)
 [![Software License](https://img.shields.io/badge/license-MIT-418677.svg)](https://github.com/rosell-dk/image-mime-type-sniffer/blob/master/LICENSE)
 [![Coverage](https://img.shields.io/endpoint?url=https://little-b.it/image-mime-type-sniffer/code-coverage/coverage-badge.json)](http://little-b.it/image-mime-type-sniffer/code-coverage/coverage/index.html)
+[![Monthly Downloads](http://poser.pugx.org/rosell-dk/image-mime-type-sniffer/d/monthly)](https://packagist.org/packages/rosell-dk/image-mime-type-sniffer)
+[![Dependents](http://poser.pugx.org/rosell-dk/image-mime-type-sniffer/dependents)](https://packagist.org/packages/rosell-dk/image-mime-type-sniffer/dependents?order_by=downloads)
 
 
 Gets mime type of common **image** files by sniffing the file content, looking for signatures.
