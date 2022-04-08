@@ -5,6 +5,37 @@ namespace ImageMimeTypeSniffer;
 class ImageMimeTypeSniffer
 {
 
+    private function checkFilePathIsRegularFile($input)
+    {
+        if (gettype($input) !== 'string') {
+            throw new \Exception('File path must be string');
+        }
+        if (strpos($input, chr(0)) !== false) {
+            throw new \Exception('NUL character is not allowed in file path!');
+        }
+        if (preg_match('#[\x{0}-\x{1f}]#', $input)) {
+            // prevents line feed, new line, tab, charater return, tab, ets.
+            throw new \Exception('Control characters #0-#20 not allowed in file path!');
+        }
+        // Prevent phar stream wrappers (security threat)
+        if (preg_match('#^phar://#', $input)) {
+            throw new \Exception('phar stream wrappers are not allowed in file path');
+        }
+        if (preg_match('#^(php|glob)://#', $input)) {
+            throw new \Exception('php and glob stream wrappers are not allowed in file path');
+        }
+        if (empty($input)) {
+            throw new \Exception('File path is empty!');
+        }
+        if (!@file_exists($input)) {
+            throw new \Exception('File does not exist');
+        }
+        if (@is_dir($input)) {
+            throw new \Exception('Expected a regular file, not a dir');
+        }
+    }
+
+
     /**
      * Try to detect mime type by sniffing the signature
      *
@@ -19,6 +50,9 @@ class ImageMimeTypeSniffer
      */
     public static function detect($filePath)
     {
+        self::checkFilePathIsRegularFile($filePath);
+
+
         $handle = @fopen($filePath, 'r');
         if ($handle === false) {
             throw new \Exception('File could not be opened');

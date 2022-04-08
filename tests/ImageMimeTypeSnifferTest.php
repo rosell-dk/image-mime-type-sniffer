@@ -64,11 +64,15 @@ class ImageMimeTypeSnifferTest extends TestCase
         // TODO: test jpx, etc
     }
 
+    public function testPSD()
+    {
+        $this->assertEquals('application/psd', $this->mimeSniff('psd-test.psd'));
+    }
+
     public function testSVG()
     {
         $this->assertEquals('image/svg+xml', $this->mimeSniff('svg-test.svg'));
     }
-
 
     public function testTiff()
     {
@@ -91,18 +95,64 @@ class ImageMimeTypeSnifferTest extends TestCase
     }
 
     /* --------- below here: exceptions ------------- */
+
+    public function testFilenameNotString()
+    {
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect(10);
+        //$this->mimeSniff(10);
+    }
+
+    public function testFilenameHasNULChar()
+    {
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect("a\0");
+    }
+    public function testFilenameHasControlChars()
+    {
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect("..\1..");
+    }
+
+    public function testFilenameIsEmpty()
+    {
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect("");
+    }
+
+    public function testFilenameIsPhar()
+    {
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect('phar://aoeu');
+    }
+
     public function testFileNotFound()
     {
        // why does this fail in PHP 7.2 ? (Uninitialized string offset: 0)
-        //$this->expectException(\Exception::class);
-        //$this->assertNull($this->mimeSniff(''));
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect(__DIR__ . '/images/no-such-file.jpg');
     }
-    public function testInvalidFile()
+    public function testFileIsDir()
     {
         $this->expectException(\Exception::class);
-        $this->assertNull($this->mimeSniff('php://input'));
+        ImageMimeTypeSniffer::detect(__DIR__ . '/images');
     }
 
+    public function testFileOnWebNotFound()
+    {
+       // why does this fail in PHP 7.2 ? (Uninitialized string offset: 0)
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect('http://aoeuhtaoeu.eau');
+    }
+
+    public function testPhPStreamWrapper()
+    {
+        $this->expectException(\Exception::class);
+        ImageMimeTypeSniffer::detect('php://input');
+    }
+
+    // TODO: We can test open failure with vfsStream
+    // https://github.com/bovigo/vfsStream/pull/212
 
     /*
     public function testICO()
