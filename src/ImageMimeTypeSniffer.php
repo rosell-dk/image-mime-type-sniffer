@@ -5,7 +5,7 @@ namespace ImageMimeTypeSniffer;
 class ImageMimeTypeSniffer
 {
 
-    private function checkFilePathIsRegularFile($input)
+    private static function checkFilePathIsRegularFile($input)
     {
         if (gettype($input) !== 'string') {
             throw new \Exception('File path must be string');
