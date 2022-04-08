@@ -84,11 +84,17 @@ jobs:
 
     - name: Create coverage badge json
       run: |
+        # extract total coverage
         COVERAGE=$(grep -oP -m 1 'Lines:\s*\K[0-9.%]+' build/coverage.txt)
-        echo \{\"schemaVersion\":1,\"label\":\"Coverage\",\"message\":\"$COVERAGE\",\"color\":\"brightgreen\"\} | tee build/coverage-badge.json
 
-      #echo "Coverage is $COVERAGE"
-      #echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
+        # set COLOR based on COVERAGE
+        if grep -oP '(^9\d.)|(^100.)' <<< "$COVERAGE" > /dev/null; then COLOR=brightgreen; elif grep -oP '[87]\d.' <<< "$COVERAGE" > /dev/null; then COLOR=orange; else COLOR=red; fi;
+
+        # generate bagde json
+        echo \{\"schemaVersion\":1,\"label\":\"Coverage\",\"message\":\"$COVERAGE\",\"color\":\"$COLOR\"\} | tee build/coverage-badge.json
+
+        # PS: If we needed COVERAGE elsewhere, we could store in ENV like this:
+        # echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
     - name: Install SSH Key (for deployment of code coverage)
       uses: shimataro/ssh-key-action@v2
