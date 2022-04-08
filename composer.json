@@ -8,7 +8,8 @@
     "ci": [
       "@test",
       "@phpcs-all",
-      "@composer validate --no-check-all --strict"
+      "@composer validate --no-check-all --strict",
+      "@phpstan"
     ],
     "cs-fix-all": [
       "php-cs-fixer fix src"
