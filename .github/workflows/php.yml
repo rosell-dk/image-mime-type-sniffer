@@ -17,7 +17,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest]
-        php: [8.1]
+        php: [7.2]
 
     steps:
     - name: Checkout
@@ -84,13 +84,13 @@ jobs:
 
     - name: Create coverage badge json
       run: |
-        # extract total coverage
+        # Extract total coverage
         COVERAGE=$(grep -oP -m 1 'Lines:\s*\K[0-9.%]+' build/coverage.txt)
 
-        # set COLOR based on COVERAGE
+        # Set COLOR based on COVERAGE
         if grep -oP '(^9\d.)|(^100.)' <<< "$COVERAGE" > /dev/null; then COLOR=brightgreen; elif grep -oP '8\d.' <<< "$COVERAGE" > /dev/null; then COLOR=yellow; elif grep -oP '[76]\d.' <<< "$COVERAGE" > /dev/null; then COLOR=orange; else COLOR=red; fi;
 
-        # generate bagde json
+        # Generate bagde json
         echo \{\"schemaVersion\":1,\"label\":\"Coverage\",\"message\":\"$COVERAGE\",\"color\":\"$COLOR\"\} | tee build/coverage-badge.json
 
         # PS: If we needed COVERAGE elsewhere, we could store in ENV like this:
@@ -102,7 +102,7 @@ jobs:
         key: ${{ secrets.DEPLOY_KEY }}
         known_hosts: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
 
-    - name: Deploy code coverage report
+    - name: Upload code coverage report
       run: |
         sh -c "rsync -rtog --chown :www-data $GITHUB_WORKSPACE/build/ $DEPLOY_DESTINATION --delete"
       env:
