@@ -25,14 +25,17 @@ jobs:
 
     - name: Determine which version of xdebug to use
       run: |
-        echo "XDEBUG=xdebug2" >> $GITHUB_ENV
+        # Set XDEBUG to "xdebug2" for PHP 7.2-7.4, but to "xdebug" for
+        if grep -oP '^7.[234]' <<< "$PHP" > /dev/null; then XDEBUG=xdebug2; else XDEBUG=xdebug; fi
 
+        # Store XDEBUG in github env, so we can access it later through env.XDEBUG
+        echo "XDEBUG=xdebug2" >> $GITHUB_ENV
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        coverage: ${{ env.XDEBUG }}  # note: xdebug2 for php 7?
+        coverage: ${{ env.XDEBUG }}
 
     - name: Validate composer.json
       run: composer validate --strict
@@ -89,7 +92,7 @@ jobs:
     - name: Create coverage badge json
       run: |
         echo "btw: xdebug is: ${{ env.XDEBUG }}"
-         
+
         # Extract total coverage
         COVERAGE=$(grep -oP -m 1 'Lines:\s*\K[0-9.%]+' build/coverage.txt)
 
