@@ -11,7 +11,7 @@ Gets mime type of common **image** files by sniffing the file content, looking f
 
 The fact that this library limits its ambition to sniff images makes it light and simple. It is also quite fast. Most other sniffers iterates through all common signatures, however this library uses a mix of finite-state machine approach and iteration to achieve a good balance of speed, compactness, simplicity and readability.
 
-The library recognizes common image formats, such as GIF, JPEG, WEBP, JPEG-2000 and HEIC
+The library recognizes the most widespread image formats, such as GIF, JPEG, WEBP, JPEG-2000 and HEIC.
 
 # Usage
 
@@ -51,7 +51,9 @@ TODO: AVIF, image/heif
 
 # Alternatives
 
-There are quite a few PHP mime type detectors out there:
+I have created a library that usis this library as well as other methods (*finfo*, *exif_imagetype*, etc) for determining image type. You might want to use that instead, to cover all bases. It is available here: [image-mime-type-guesser](https://github.com/rosell-dk/image-mime-type-guesser).
+
+There are also other PHP mime type sniffers out there:
 
 - https://github.com/Intervention/mimesniffer
 - https://github.com/Tinram/File-Identifier
