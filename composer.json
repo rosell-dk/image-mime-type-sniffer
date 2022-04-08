@@ -15,7 +15,7 @@
     ],
     "cs-fix": "php-cs-fixer fix",
     "cs-dry": "php-cs-fixer fix --dry-run --diff",
-    "test": "phpunit --coverage-text=build/coverage.txt --coverage-clover=build/coverage.clover --whitelist=src tests",
+    "test": "phpunit --coverage-text=build/coverage.txt --coverage-clover=build/coverage.clover --coverage-html=build/coverage --whitelist=src tests",
     "test-no-cov": "phpunit --no-coverage tests",
     "test2": "phpunit tests",
     "phpcs": "phpcs --standard=phpcs-ruleset.xml",
