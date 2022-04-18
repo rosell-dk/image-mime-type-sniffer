@@ -9,7 +9,7 @@
 [![Dependents](http://poser.pugx.org/rosell-dk/image-mime-type-sniffer/dependents)](https://packagist.org/packages/rosell-dk/image-mime-type-sniffer/dependents?order_by=downloads)
 
 
-Gets mime type of common **image** files by sniffing the file content, looking for signatures.
+Gets mime type of common *image* files by sniffing the file content, looking for signatures.
 
 The fact that this library limits its ambition to sniff images makes it light and simple. It is also quite fast. Most other sniffers iterates through all common signatures, however this library uses a mix of finite-state machine approach and iteration to achieve a good balance of speed, compactness, simplicity and readability.
 
@@ -53,7 +53,7 @@ TODO: AVIF, image/heif
 
 # Alternatives
 
-I have created a library that usis this library as well as other methods (*finfo*, *exif_imagetype*, etc) for determining image type. You might want to use that instead, to cover all bases. It is available here: [image-mime-type-guesser](https://github.com/rosell-dk/image-mime-type-guesser).
+I have created a library that uses this library as well as other methods (*finfo*, *exif_imagetype*, etc) for determining image type. You might want to use that instead, to cover all bases. It is available here: [image-mime-type-guesser](https://github.com/rosell-dk/image-mime-type-guesser).
 
 There are also other PHP mime type sniffers out there:
 
