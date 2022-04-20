@@ -63,3 +63,9 @@ There are also other PHP mime type sniffers out there:
 - https://github.com/shanept/MimeSniffer
 - https://github.com/zjsxwc/mime-type-sniffer
 - https://github.com/thephpleague/mime-type-detection/tree/main/src
+
+## Do you like what I do?
+Perhaps you want to support my work, so I can continue doing it :)
+
+- [Become a backer or sponsor on Patreon](https://www.patreon.com/rosell).
+- [Buy me a Coffee](https://ko-fi.com/rosell)
