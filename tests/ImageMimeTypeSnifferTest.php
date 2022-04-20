@@ -85,6 +85,12 @@ class ImageMimeTypeSnifferTest extends TestCase
         $this->assertEquals('image/webp', $this->mimeSniff('webp-test.webp'));
     }
 
+    public function testAvif()
+    {
+        //$this->assertEquals('image/avif', $this->mimeSniff('avif-test.avif'));
+        $this->assertEquals('image/avif', $this->mimeSniff('avif-test.avif'));
+    }
+
     /* --------- below here: files that are not images, should NOT be recognized ------------- */
     public function testTxt()
     {

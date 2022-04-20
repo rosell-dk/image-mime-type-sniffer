@@ -85,6 +85,8 @@ class ImageMimeTypeSniffer
             case "\x00":
                 $hexPatterns[] = ['image/x-icon', "/^00000(1?2)00/"];
 
+                $binPatterns[] = ['image/avif', "/^(.{4}|.{8})ftypavif/"];
+
                 if (preg_match("/^.{8}6A502020/", $sampleHex) === 1) {
                     // jpeg-2000 - a bit more complex, as block size may vary
                     // https://www.file-recovery.com/jp2-signature-format.htm
