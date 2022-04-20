@@ -63,6 +63,9 @@ class ImageMimeTypeSniffer
         if ($sampleBin === false) {
             throw new \Exception('File could not be read');
         }
+        if (strlen($sampleBin) < 20) {
+            return null;  // File is too small for us to deal with
+        }
         $firstByte = $sampleBin[0];
         $sampleHex = strtoupper(bin2hex($sampleBin));
 

@@ -95,6 +95,8 @@ class ImageMimeTypeSnifferTest extends TestCase
     public function testTxt()
     {
         $this->assertNull($this->mimeSniff('not-images/txt-test.txt'));
+        $this->assertNull($this->mimeSniff('not-images/txt-test-very-small.txt'));
+        $this->assertNull($this->mimeSniff('not-images/text-with-jpg-extension.jpg'));
     }
     public function testODT()
     {
