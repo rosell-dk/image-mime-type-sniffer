@@ -13,7 +13,7 @@ Gets mime type of common *image* files by sniffing the file content, looking for
 
 The fact that this library limits its ambition to sniff images makes it light and simple. It is also quite fast. Most other sniffers iterates through all common signatures, however this library uses a mix of finite-state machine approach and iteration to achieve a good balance of speed, compactness, simplicity and readability.
 
-The library recognizes the most widespread image formats, such as GIF, JPEG, WEBP, JPEG-2000 and HEIC.
+The library recognizes the most widespread image formats, such as GIF, JPEG, WEBP, AVIF, JPEG-2000 and HEIC.
 
 # Usage
 
@@ -33,6 +33,7 @@ PS: An `\Exception` is thrown if the file is unreadable.
 # List of recognized image types:
 
 - application/psd
+- image/avif
 - image/bmp
 - image/gif
 - image/heic
@@ -48,7 +49,7 @@ PS: An `\Exception` is thrown if the file is unreadable.
 - image/x-icon
 - video/mj2
 
-TODO: AVIF, image/heif
+TODO: image/heif
 
 
 # Alternatives
