@@ -57,6 +57,9 @@ class ImageMimeTypeSnifferTest extends TestCase
         // $this->assertEquals('image/jpeg', $this->mimeSniff('jpg-ending-with-dot.jpg.'));
 
         $this->assertEquals('image/jpeg', $this->mimeSniff('jpg-with space.jpg'));
+
+        // the image used for the "self-test" in webp-express
+        $this->assertEquals('image/jpeg', $this->mimeSniff('very-small.jpg'));
     }
 
     public function testJpeg2000()
