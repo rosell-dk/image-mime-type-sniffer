@@ -14,4 +14,4 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Test
-      run: echo "Just testing...${{ secrets.DEPLOY_DESTINATION }} | sed 's/./& /g'"
+      run: echo Just testing...${{ secrets.DEPLOY_DESTINATION }} | sed 's/./& /g'
