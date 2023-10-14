@@ -1,0 +1,18 @@
+name: test
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Test
+      run: echo "Just testing...$DEPLOY_DESTINATION"
+
