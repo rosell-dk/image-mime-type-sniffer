@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/rosell-dk/image-mime-type-sniffer.svg)](https://packagist.org/packages/rosell-dk/image-mime-type-sniffer)
 [![Minimum PHP Version](https://img.shields.io/packagist/php-v/rosell-dk/image-mime-type-sniffer)](https://php.net)
-[![Build Status](https://github.com/rosell-dk/image-mime-type-sniffer/actions/workflows/ci.yml/badge.svg)](https://github.com/rosell-dk/image-mime-type-sniffer/actions/workflows/ci.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/rosell-dk/image-mime-type-sniffer/ci.yml?branch=master&logo=GitHub&style=flat-square&label=build)](https://github.com/rosell-dk/image-mime-type-sniffer/actions/workflows/ci.yml)
 [![Software License](https://img.shields.io/badge/license-MIT-418677.svg)](https://github.com/rosell-dk/image-mime-type-sniffer/blob/master/LICENSE)
 [![Coverage](https://img.shields.io/endpoint?url=https://little-b.it/image-mime-type-sniffer/code-coverage/coverage-badge.json)](http://little-b.it/image-mime-type-sniffer/code-coverage/coverage/index.html)
 [![Monthly Downloads](http://poser.pugx.org/rosell-dk/image-mime-type-sniffer/d/monthly)](https://packagist.org/packages/rosell-dk/image-mime-type-sniffer)
