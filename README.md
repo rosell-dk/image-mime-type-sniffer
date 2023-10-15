@@ -30,6 +30,17 @@ if (is_null($mimeType)) {
 
 PS: An `\Exception` is thrown if the file is unreadable.
 
+# Platforms
+Works on (at least):
+OS: Ubuntu (22.04, 20.04), Windows (2022, 2019), Mac OS (11, 10.15)
+PHP: 5.6 - 8.2 (also tested 8.3 and 8.4 development versions in October 2023)
+
+Each new release will be tested on all combinations of OSs and PHP versions that are [supported](https://github.com/marketplace/actions/setup-php-action) by GitHub-hosted runners. Except that we do not below PHP 5.6.
+
+Testing consists of running the unit tests. The code in this library is almost completely covered by tests (~97% coverage).
+
+Release 1.1.1 has been tested in PHP: 5.6 - 8.2 on the following OSs: Ubuntu (22.04, 20.04, 18.04), Windows (2022, 2019), Mac OS (13, 12, 11, 10.15). Code coverage: ~97%. For some reason PHP 5.6 testing fails on Windows
+
 # List of recognized image types:
 
 - application/psd
