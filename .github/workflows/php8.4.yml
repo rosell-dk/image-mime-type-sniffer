@@ -1,9 +1,9 @@
-name: PHP 8.2
+name: PHP 8.4
 
 on:
   workflow_dispatch:
   schedule: # Run monthly
-  - cron: "14 3 1 * *"
+  - cron: "14 3 20 * *"
 
 permissions:
   contents: read
@@ -38,8 +38,9 @@ jobs:
     - name: Run phpunit (test cases)
       run: composer run-script test
 
-    - name: Run phpstan
-      run: composer run-script phpstan
+    # skip phpstan - does not currently work on PHP 8.4
+    #- name: Run phpstan
+    #  run: composer run-script phpstan
 
     - name: run phpcs (to check coding style)
       run: composer run-script phpcs-all
